@@ -1,0 +1,20 @@
+FROM plant-webapp-base:latest
+
+RUN mkdir /src
+
+WORKDIR /
+
+# TODO: remove
+COPY bower.json .bowerrc ./
+RUN bower install --allow-root
+
+COPY requirements.txt ./
+RUN python -m pip install -r requirements.txt
+
+COPY lazy_requirements.txt ./
+RUN python -m pip install -r lazy_requirements.txt
+
+COPY scripts/ ./scripts/
+COPY manage.py ./
+
+CMD bash scripts/run_django.sh

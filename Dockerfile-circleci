@@ -1,0 +1,20 @@
+FROM plant-webapp-base:latest
+
+RUN mkdir /src
+
+WORKDIR /
+
+# TODO: remove
+COPY django/bower.json django/.bowerrc ./
+RUN bower install --allow-root
+
+COPY django/requirements.txt ./
+RUN python -m pip install -r requirements.txt
+
+COPY django/manage.py ./
+
+COPY django/scripts/ ./scripts/
+COPY django/src/ ./src/
+COPY webpack/src/ ./src/
+
+CMD bash scripts/run_django.sh
