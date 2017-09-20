@@ -1,0 +1,8 @@
+#!/bin/bash
+
+NAME="plant_webapp_$PLANT_WEBAPP_ENV"
+psql -U postgres -h postgres << EOF
+CREATE USER $NAME WITH PASSWORD '';
+CREATE DATABASE $NAME;
+GRANT ALL ON DATABASE "$NAME" TO $NAME;
+EOF
